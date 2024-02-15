@@ -1,7 +1,11 @@
+"use client";
+import { useContext } from 'react';
 import { ResponsiveControl } from '../layouts/responsive-control';
 import { Input } from '../ui/input';
+import { KanbanBoardContext } from '@/contexts/kanban-board-context';
 
 export default function Header() {
+  const { searchQuery, setSearchQuery } = useContext(KanbanBoardContext);
   return (
     <header className="py-3 border-b">
       <ResponsiveControl className="flex flex-row items-center justify-between">
@@ -14,6 +18,8 @@ export default function Header() {
           <Input
             className="w-[420px]"
             placeholder="Search tasks by title, assignee or tags"
+            onChange={(e) => setSearchQuery(e.target.value as string)}
+            value={searchQuery}
           />
         </div>
       </ResponsiveControl>

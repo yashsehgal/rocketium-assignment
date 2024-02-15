@@ -5,7 +5,7 @@ import { KanbanCard } from './kanban-card';
 
 export interface KanbanListProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    KanbanListType {
+  KanbanListType {
   index: number;
 }
 
@@ -28,7 +28,7 @@ export const KanbanList = forwardRef<HTMLDivElement, KanbanListProps>(
           <div className="grid grid-cols-1 gap-2">
             {listItems.map((card: KanbanCardType, index: number) => {
               return (
-                <KanbanCard {...card} key={index} index={index} draggable />
+                <KanbanCard key={index} index={index} draggable {...card} />
               );
             })}
           </div>

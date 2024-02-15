@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/sections/header';
+import KanbanBoardContextProvider from '@/providers/kanban-board-context-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,8 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header />
-        {children}
+        <KanbanBoardContextProvider>
+          <Header />
+          {children}
+        </KanbanBoardContextProvider>
       </body>
     </html>
   );

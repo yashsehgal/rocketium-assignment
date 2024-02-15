@@ -6,7 +6,7 @@ import { KanbanBoardContext } from '@/contexts/kanban-board-context';
 import { KanbanList } from '../ui/kanban-list';
 
 export default function KanbanView() {
-  const { kanbanData, setKanbanData } = useContext(KanbanBoardContext);
+  const { filteredKanbanData, setFilteredKanbanData } = useContext(KanbanBoardContext);
 
   const onDragEnd = (result: DropResult) => {
     // Dropped outside the list
@@ -17,7 +17,7 @@ export default function KanbanView() {
     const { source, destination } = result;
 
     // Update the data after dragging and dropping
-    const updatedKanbanData = [...kanbanData];
+    const updatedKanbanData = [...filteredKanbanData];
     const sourceList = updatedKanbanData.find(
       (list) => list.listName === source.droppableId,
     );
@@ -32,7 +32,7 @@ export default function KanbanView() {
     <div className="kanban-view py-12">
       <DragDropContext onDragEnd={onDragEnd}>
         <ResponsiveControl className="flex flex-row items-start justify-start gap-3 max-xl:overflow-x-scroll">
-          {kanbanData.map((list: KanbanListType, index: number) => {
+          {filteredKanbanData.map((list: KanbanListType, index: number) => {
             return <KanbanList key={index} index={index} {...list} />;
           })}
         </ResponsiveControl>
