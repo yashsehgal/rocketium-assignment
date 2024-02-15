@@ -5,7 +5,13 @@ import { Badge } from './badge';
 import { BadgeThemeForTeam } from '@/common/constants';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Sheet, SheetContent, SheetTrigger } from './sheet';
+import { Sheet, SheetTrigger } from './sheet';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 export interface KanbanCardProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -67,15 +73,23 @@ export const KanbanCard = forwardRef<HTMLDivElement, KanbanCardProps>(
                 <div className="flex flex-row items-center justify-end gap-0">
                   {assignees.map(({ username, avatar }, index) => {
                     return (
-                      <Image
-                        key={index}
-                        src={avatar}
-                        alt={username}
-                        width={24}
-                        height={24}
-                        className="rounded-full even:ml-[-4px]"
-                        priority
-                      />
+                      <TooltipProvider key={index}>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Image
+                              src={avatar}
+                              alt={username}
+                              width={24}
+                              height={24}
+                              className="rounded-full even:ml-[-4px]"
+                              priority
+                            />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>@{username}</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     );
                   })}
                 </div>
