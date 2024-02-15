@@ -6,7 +6,8 @@ import { KanbanBoardContext } from '@/contexts/kanban-board-context';
 import { KanbanList } from '../ui/kanban-list';
 
 export default function KanbanView() {
-  const { filteredKanbanData, setFilteredKanbanData } = useContext(KanbanBoardContext);
+  const { filteredKanbanData, setFilteredKanbanData } =
+    useContext(KanbanBoardContext);
 
   const onDragEnd = (result: DropResult) => {
     // Dropped outside the list

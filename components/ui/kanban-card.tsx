@@ -5,6 +5,7 @@ import { Badge } from './badge';
 import { BadgeThemeForTeam } from '@/common/constants';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { Sheet, SheetContent, SheetTrigger } from './sheet';
 
 export interface KanbanCardProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -43,44 +44,50 @@ export const KanbanCard = forwardRef<HTMLDivElement, KanbanCardProps>(
         whileTap={{
           rotate: -4,
         }}>
-        <div
-          ref={ref}
-          className={cn(
-            'kanban-card bg-white rounded-lg shadow-sm py-4 px-4 cursor-pointer hover:shadow-lg transition-all active:scale-90 select-none',
-            className,
-          )}
-          id={`${taskTitle}-${ticketID}`}
-          {...args}>
-          <Badge theme={BadgeThemeForTeam[teamName]} className="mb-2">
-            {teamName}
-          </Badge>
-          <p className="kanban-card-title text-sm font-medium">{taskTitle}</p>
-          <div className="my-3 flex flex-row items-center justify-between">
-            <p className="kanban-card-ticket-id-wrapper text-xs uppercase text-gray-400 font-medium">
-              {`Ticket #${ticketID}`}
-            </p>
-            <div className="flex flex-row items-center justify-end gap-0">
-              {assignees.map(({ username, avatar }, index) => {
-                return (
-                  <Image
-                    key={index}
-                    src={avatar}
-                    alt={username}
-                    width={24}
-                    height={24}
-                    className="rounded-full even:ml-[-4px]"
-                    priority
-                  />
-                );
-              })}
+        <Sheet>
+          <SheetTrigger asChild>
+            <div
+              ref={ref}
+              className={cn(
+                'kanban-card bg-white rounded-lg shadow-sm py-4 px-4 cursor-pointer hover:shadow-lg transition-all active:scale-90 select-none',
+                className,
+              )}
+              id={`${taskTitle}-${ticketID}`}
+              {...args}>
+              <Badge theme={BadgeThemeForTeam[teamName]} className="mb-2">
+                {teamName}
+              </Badge>
+              <p className="kanban-card-title text-sm font-medium">
+                {taskTitle}
+              </p>
+              <div className="my-3 flex flex-row items-center justify-between">
+                <p className="kanban-card-ticket-id-wrapper text-xs uppercase text-gray-400 font-medium">
+                  {`Ticket #${ticketID}`}
+                </p>
+                <div className="flex flex-row items-center justify-end gap-0">
+                  {assignees.map(({ username, avatar }, index) => {
+                    return (
+                      <Image
+                        key={index}
+                        src={avatar}
+                        alt={username}
+                        width={24}
+                        height={24}
+                        className="rounded-full even:ml-[-4px]"
+                        priority
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="flex flex-row items-center justify-start gap-2">
+                {tags?.map((tag: string, index: number) => (
+                  <Badge key={index}>{tag}</Badge>
+                ))}
+              </div>
             </div>
-          </div>
-          <div className="flex flex-row items-center justify-start gap-2">
-            {tags?.map((tag: string, index: number) => (
-              <Badge key={index}>{tag}</Badge>
-            ))}
-          </div>
-        </div>
+          </SheetTrigger>
+        </Sheet>
       </motion.div>
     );
   },

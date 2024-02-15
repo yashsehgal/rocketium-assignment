@@ -5,7 +5,7 @@ import { KanbanCard } from './kanban-card';
 
 export interface KanbanListProps
   extends React.HTMLAttributes<HTMLDivElement>,
-  KanbanListType {
+    KanbanListType {
   index: number;
 }
 

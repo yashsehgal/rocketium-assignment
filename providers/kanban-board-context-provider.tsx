@@ -10,7 +10,9 @@ export default function KanbanBoardContextProvider({
 }) {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [kanbanData, setKanbanData] = useState<KanbanListType[]>([]);
-  const [filteredKanbanData, setFilteredKanbanData] = useState<KanbanListType[]>([]);
+  const [filteredKanbanData, setFilteredKanbanData] = useState<
+    KanbanListType[]
+  >([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -24,15 +26,25 @@ export default function KanbanBoardContextProvider({
           const filteredData = response.map((list) => ({
             ...list,
             listItems: list.listItems.filter((task) => {
-              const isTitleMatch = task.taskTitle.toLowerCase().includes(searchQuery.toLowerCase());
+              const isTitleMatch = task.taskTitle
+                .toLowerCase()
+                .includes(searchQuery.toLowerCase());
               const isAssigneeMatch = task.assignees.some((assignee) =>
-                assignee.username.toLowerCase().includes(searchQuery.toLowerCase())
+                assignee.username
+                  .toLowerCase()
+                  .includes(searchQuery.toLowerCase()),
               );
-              const isTagMatch = task.tags?.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-              const isTeamNameMatch = task.teamName.toLowerCase().includes(searchQuery.toLowerCase());
+              const isTagMatch = task.tags?.some((tag) =>
+                tag.toLowerCase().includes(searchQuery.toLowerCase()),
+              );
+              const isTeamNameMatch = task.teamName
+                .toLowerCase()
+                .includes(searchQuery.toLowerCase());
 
               // Customize this condition based on your search requirements
-              return isTitleMatch || isAssigneeMatch || isTagMatch || isTeamNameMatch;
+              return (
+                isTitleMatch || isAssigneeMatch || isTagMatch || isTeamNameMatch
+              );
             }),
           }));
 
@@ -54,7 +66,7 @@ export default function KanbanBoardContextProvider({
         kanbanData,
         setKanbanData,
         filteredKanbanData,
-        setFilteredKanbanData
+        setFilteredKanbanData,
       }}>
       {children}
     </KanbanBoardContext.Provider>
