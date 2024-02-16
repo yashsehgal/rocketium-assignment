@@ -1,15 +1,31 @@
-'use client';
-import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+import { DragDropContext, DragStart, DragUpdate, DropResult } from 'react-beautiful-dnd';
 import { ResponsiveControl } from '../layouts/responsive-control';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { KanbanBoardContext } from '@/contexts/kanban-board-context';
 import { KanbanList } from '../ui/kanban-list';
 
 export default function KanbanView() {
-  const { filteredKanbanData, setFilteredKanbanData } =
-    useContext(KanbanBoardContext);
+  const { filteredKanbanData, setFilteredKanbanData } = useContext(KanbanBoardContext);
+  const [draggedItem, setDraggedItem] = useState<KanbanCardType | null>(null);
+  const [draggedOverIndex, setDraggedOverIndex] = useState<number | null>(null);
+
+  const onDragStart = (initial: DragStart) => {
+    const { source } = initial;
+    const sourceList = filteredKanbanData.find((list) => list.listName === source.droppableId);
+    const draggedTask = sourceList?.listItems[source.index];
+    setDraggedItem(draggedTask || null);
+  };
+
+  const onDragUpdate = (update: DragUpdate) => {
+    const { destination } = update;
+    setDraggedOverIndex(destination?.index || null);
+  };
 
   const onDragEnd = (result: DropResult) => {
+    // Reset state
+    setDraggedItem(null);
+    setDraggedOverIndex(null);
+
     // Dropped outside the list
     if (!result.destination) {
       return;
@@ -19,19 +35,21 @@ export default function KanbanView() {
 
     // Update the data after dragging and dropping
     const updatedKanbanData = [...filteredKanbanData];
-    const sourceList = updatedKanbanData.find(
-      (list) => list.listName === source.droppableId,
-    );
-    const destinationList = updatedKanbanData.find(
-      (list) => list.listName === destination.droppableId,
-    );
-    const [draggedItem] = sourceList!.listItems.splice(source.index, 1);
-    destinationList!.listItems.splice(destination.index, 0, draggedItem);
+    const sourceList = updatedKanbanData.find((list) => list.listName === source.droppableId);
+    const destinationList = updatedKanbanData.find((list) => list.listName === destination.droppableId);
+    const [draggedTask] = sourceList!.listItems.splice(source.index, 1);
+    destinationList!.listItems.splice(destination.index, 0, draggedTask);
+
+    // Update the local storage with the latest Kanban data
+    localStorage.setItem('kanban', JSON.stringify(updatedKanbanData));
+
+    // Update the state to trigger a re-render
+    setFilteredKanbanData(updatedKanbanData);
   };
 
   return (
     <div className="kanban-view py-12">
-      <DragDropContext onDragEnd={onDragEnd}>
+      <DragDropContext onDragStart={onDragStart} onDragUpdate={onDragUpdate} onDragEnd={onDragEnd}>
         <ResponsiveControl className="flex flex-row items-start justify-start gap-3 max-xl:overflow-x-scroll">
           {filteredKanbanData.map((list: KanbanListType, index: number) => {
             return <KanbanList key={index} index={index} {...list} />;
