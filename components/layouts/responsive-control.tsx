@@ -1,9 +1,30 @@
+/**
+ * @file components/layouts/responsive-control.tsx
+ * @description ResponsiveControl component for controlling layout responsiveness.
+ */
+
 import { cn } from '@/helpers/utils';
 import { forwardRef } from 'react';
 
+/**
+ * Props for the ResponsiveControl component.
+ * @interface ResponsiveControlProps
+ * @extends React.HTMLAttributes<HTMLDivElement>
+ */
 export interface ResponsiveControlProps
   extends React.HTMLAttributes<HTMLDivElement> {}
 
+/**
+ * Represents a responsive control component for controlling layout responsiveness.
+ * @function
+ * @name ResponsiveControl
+ * @memberof module:components/layouts
+ * @type {React.forwardRef<HTMLDivElement, ResponsiveControlProps>}
+ * @param {object} props - Props for the ResponsiveControl component.
+ * @param {string} [props.className] - Additional class names for styling.
+ * @param {React.Ref<HTMLDivElement>} ref - Ref to forward to the responsive control element.
+ * @returns {React.ElementRef<HTMLDivElement>} The responsive control element.
+ */
 export const ResponsiveControl = forwardRef<
   HTMLDivElement,
   ResponsiveControlProps
