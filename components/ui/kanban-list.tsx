@@ -27,7 +27,7 @@ export const KanbanList = forwardRef<HTMLDivElement, KanbanListProps>(
               {...args}>
               <div className="grid grid-cols-1 gap-2">
                 {listItems.map((card: KanbanCardType, index: number) => (
-                  <Draggable key={index} draggableId={`${card.taskTitle}-${card.ticketID}`} index={index}>
+                  <Draggable key={`${card.taskTitle.replaceAll(' ', '-')}-${card.ticketID}`} draggableId={`${card.taskTitle.replaceAll(' ', '-')}-${card.ticketID}`} index={index}>
                     {(provided, snapshot) => (
                       <div
                         ref={provided.innerRef}

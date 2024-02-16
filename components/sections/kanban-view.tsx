@@ -5,7 +5,7 @@ import { KanbanBoardContext } from '@/contexts/kanban-board-context';
 import { KanbanList } from '../ui/kanban-list';
 
 export default function KanbanView() {
-  const { filteredKanbanData, setFilteredKanbanData } = useContext(KanbanBoardContext);
+  const { filteredKanbanData, setFilteredKanbanData, setKanbanData } = useContext(KanbanBoardContext);
   const [draggedItem, setDraggedItem] = useState<KanbanCardType | null>(null);
   const [draggedOverIndex, setDraggedOverIndex] = useState<number | null>(null);
 
@@ -45,6 +45,7 @@ export default function KanbanView() {
 
     // Update the state to trigger a re-render
     setFilteredKanbanData(updatedKanbanData);
+    setKanbanData(updatedKanbanData);
   };
 
   return (

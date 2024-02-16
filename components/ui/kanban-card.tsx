@@ -34,7 +34,7 @@ export const KanbanCard = forwardRef<HTMLDivElement, KanbanCardProps>(
           'kanban-card bg-white rounded-lg shadow-sm py-4 px-4 cursor-pointer hover:shadow-lg transition-all active:scale-90 select-none',
           className,
         )}
-        id={`${taskTitle}-${ticketID}`}
+        id={`${taskTitle.replaceAll(' ', '-')}-${ticketID}`}
         {...args}>
         <Badge theme={BadgeThemeForTeam[teamName]} className="mb-2">
           {teamName}
