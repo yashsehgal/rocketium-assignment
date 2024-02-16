@@ -5,7 +5,7 @@ import { Badge } from './badge';
 import { BadgeThemeForTeam } from '@/common/constants';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Sheet, SheetTrigger } from './sheet';
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from './sheet';
 import {
   Tooltip,
   TooltipContent,
@@ -15,7 +15,7 @@ import {
 
 export interface KanbanCardProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    KanbanCardType {
+  KanbanCardType {
   index: number;
 }
 
@@ -101,6 +101,49 @@ export const KanbanCard = forwardRef<HTMLDivElement, KanbanCardProps>(
               </div>
             </div>
           </SheetTrigger>
+          <SheetContent>
+            <SheetHeader>
+              <Badge theme={BadgeThemeForTeam[teamName]} className="mb-2">
+                {teamName}
+              </Badge>
+              <SheetTitle>{taskTitle}</SheetTitle>
+            </SheetHeader>
+            <div className='sheet-content-body'>
+              <div className="my-3 flex flex-row items-center justify-between">
+                <p className="kanban-card-ticket-id-wrapper text-xs uppercase text-gray-400 font-medium">
+                  {`Ticket #${ticketID}`}
+                </p>
+                <div className="flex flex-row items-center justify-end gap-0">
+                  {assignees.map(({ username, avatar }, index) => {
+                    return (
+                      <TooltipProvider key={index}>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Image
+                              src={avatar}
+                              alt={username}
+                              width={24}
+                              height={24}
+                              className="rounded-full even:ml-[-4px]"
+                              priority
+                            />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>@{username}</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="flex flex-row items-center justify-start gap-2">
+                {tags?.map((tag: string, index: number) => (
+                  <Badge key={index}>{tag}</Badge>
+                ))}
+              </div>
+            </div>
+          </SheetContent>
         </Sheet>
       </motion.div>
     );
