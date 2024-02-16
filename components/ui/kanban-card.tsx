@@ -5,12 +5,33 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { forwardRef } from 'react';
 
+/**
+ * Props for the KanbanCard component.
+ * @interface KanbanCardProps
+ * @extends HTMLAttributes<HTMLDivElement>
+ * @extends KanbanCardType
+ */
 export interface KanbanCardProps
   extends React.HTMLAttributes<HTMLDivElement>,
     KanbanCardType {
   index: number;
 }
 
+/**
+ * Represents a Kanban card UI component.
+ *
+ * @component
+ * @example
+ * <KanbanCard
+ *   className="custom-styles"
+ *   taskTitle="Example Task"
+ *   teamName="CHRONOS"
+ *   ticketID={123}
+ *   assignees={[{ username: 'user1', avatar: 'avatar1.jpg' }]}
+ *   index={0}
+ *   tags={['tag1', 'tag2']}
+ * />
+ */
 export const KanbanCard = forwardRef<HTMLDivElement, KanbanCardProps>(
   (
     {
@@ -36,7 +57,7 @@ export const KanbanCard = forwardRef<HTMLDivElement, KanbanCardProps>(
           opacity: 1,
         }}
         transition={{
-          type: 'tween',
+          type: 'spring',
         }}
         whileTap={{
           rotate: -4,

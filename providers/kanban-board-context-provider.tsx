@@ -1,19 +1,43 @@
+/**
+ * @file providers/kanban-board-context-provider.tsx
+ * @description Provider component for the Kanban Board context.
+ */
+
 'use client';
 import { KanbanBoardContext } from '@/contexts/kanban-board-context';
 import { fetchInitialKanbabData } from '@/scripts';
 import { useEffect, useState } from 'react';
 
+/**
+ * React functional component representing the Kanban Board context provider.
+ * @component
+ * @name KanbanBoardContextProvider
+ * @param {object} props - The component props.
+ * @param {React.ReactNode} props.children - The child components.
+ * @returns {React.ReactNode} - The JSX elements representing the provider.
+ * @example
+ * <KanbanBoardContextProvider>
+ *   <App />
+ * </KanbanBoardContextProvider>
+ */
 export default function KanbanBoardContextProvider({
   children,
 }: {
   children: React.ReactNode;
-}) {
+}): React.ReactNode {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [kanbanData, setKanbanData] = useState<KanbanListType[]>([]);
   const [filteredKanbanData, setFilteredKanbanData] = useState<
     KanbanListType[]
   >([]);
 
+  /**
+   * Effect hook for fetching initial Kanban data and updating the context.
+   * @function
+   * @name useEffect
+   * @memberof module:providers~KanbanBoardContextProvider
+   * @inner
+   */
   useEffect(() => {
     async function fetchData() {
       try {
@@ -58,6 +82,10 @@ export default function KanbanBoardContextProvider({
     fetchData();
   }, [searchQuery]);
 
+  /**
+   * The provider component rendering the KanbanBoardContext.Provider.
+   * @returns {React.ReactNode} - The JSX elements representing the provider.
+   */
   return (
     <KanbanBoardContext.Provider
       value={{

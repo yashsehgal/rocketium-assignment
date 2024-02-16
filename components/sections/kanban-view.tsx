@@ -1,3 +1,7 @@
+/**
+ * @file components/sections/kanban-view.tsx
+ * @description Kanban view component for displaying and managing tasks using a Kanban board.
+ */
 import {
   DragDropContext,
   DragStart,
@@ -9,13 +13,25 @@ import { useContext, useState } from 'react';
 import { KanbanBoardContext } from '@/contexts/kanban-board-context';
 import { KanbanList } from '../ui/kanban-list';
 
-export default function KanbanView() {
+/**
+ * Kanban view component for displaying and managing tasks using a Kanban board.
+ * @function
+ * @name KanbanView
+ * @memberof module:components/sections
+ * @returns {React.ReactElement} The KanbanView component.
+ */
+export default function KanbanView(): React.ReactElement {
   const { filteredKanbanData, setFilteredKanbanData, setKanbanData } =
     useContext(KanbanBoardContext);
   const [draggedItem, setDraggedItem] = useState<KanbanCardType | null>(null);
   const [draggedOverIndex, setDraggedOverIndex] = useState<number | null>(null);
 
-  const onDragStart = (initial: DragStart) => {
+  /**
+   * Handles the start of a drag operation.
+   * @param {DragStart} initial - The initial drag information.
+   * @returns {void}
+   */
+  const onDragStart = (initial: DragStart): void => {
     const { source } = initial;
     const sourceList = filteredKanbanData.find(
       (list) => list.listName === source.droppableId,
@@ -24,12 +40,22 @@ export default function KanbanView() {
     setDraggedItem(draggedTask || null);
   };
 
-  const onDragUpdate = (update: DragUpdate) => {
+  /**
+   * Handles updates during a drag operation.
+   * @param {DragUpdate} update - The drag update information.
+   * @returns {void}
+   */
+  const onDragUpdate = (update: DragUpdate): void => {
     const { destination } = update;
     setDraggedOverIndex(destination?.index || null);
   };
 
-  const onDragEnd = (result: DropResult) => {
+  /**
+   * Handles the end of a drag operation.
+   * @param {DropResult} result - The result of the drag operation.
+   * @returns {void}
+   */
+  const onDragEnd = (result: DropResult): void => {
     // Reset state
     setDraggedItem(null);
     setDraggedOverIndex(null);
@@ -57,7 +83,6 @@ export default function KanbanView() {
 
     // Update the state to trigger a re-render
     setFilteredKanbanData(updatedKanbanData);
-    // setKanbanData(updatedKanbanData);
   };
 
   return (

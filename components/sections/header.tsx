@@ -1,10 +1,31 @@
 'use client';
+
+/**
+ * @file components/sections/header.tsx
+ * @description Header component for the Kanban board section.
+ */
+
+/**
+ * Header component for the Kanban board section.
+ * @function
+ * @name Header
+ * @memberof module:components/sections
+ * @returns {React.ReactElement} The Header component.
+ */
+
 import { useContext } from 'react';
 import { ResponsiveControl } from '../layouts/responsive-control';
 import { Input } from '../ui/input';
 import { KanbanBoardContext } from '@/contexts/kanban-board-context';
 
-export default function Header() {
+/**
+ * Functional component representing the header of the Kanban board section.
+ * @function
+ * @name Header
+ * @memberof module:components/sections
+ * @returns {React.ReactElement} The Header component.
+ */
+export default function Header(): React.ReactElement {
   const { searchQuery, setSearchQuery } = useContext(KanbanBoardContext);
   return (
     <header className="py-3 border-b">

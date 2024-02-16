@@ -1,3 +1,8 @@
+/**
+ * @file data/initial-kanban-data.ts
+ * @description Initial Kanban data for the application.
+ */
+
 export const INITIAL_KANBAN_DATA: KanbanListType[] = [
   {
     listName: 'Not Started',

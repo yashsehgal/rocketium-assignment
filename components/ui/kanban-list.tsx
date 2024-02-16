@@ -3,6 +3,12 @@ import { forwardRef, ReactNode } from 'react';
 import { KanbanCard } from './kanban-card';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 
+/**
+ * Props for the KanbanList component.
+ * @interface KanbanListProps
+ * @extends React.HTMLAttributes<HTMLDivElement>
+ * @extends KanbanListType
+ */
 export interface KanbanListProps
   extends React.HTMLAttributes<HTMLDivElement>,
     KanbanListType {
@@ -10,6 +16,20 @@ export interface KanbanListProps
   children?: ReactNode;
 }
 
+/**
+ * Represents a Kanban list UI component with draggable cards.
+ *
+ * @component
+ * @example
+ * <KanbanList
+ *   className="custom-styles"
+ *   listName="To Do"
+ *   listItems={[
+ *     { teamName: 'CHRONOS', taskTitle: 'Task 1', ticketID: 123, assignees: [], tags: ['Tag1'] },
+ *   ]}
+ *   index={0}
+ * />
+ */
 export const KanbanList = forwardRef<HTMLDivElement, KanbanListProps>(
   ({ className, listItems = [], listName, index, ...args }, ref) => {
     return (
