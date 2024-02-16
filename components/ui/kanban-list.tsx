@@ -15,7 +15,7 @@ export const KanbanList = forwardRef<HTMLDivElement, KanbanListProps>(
         <div className="kanban-list-details-wrapper px-2 mb-2">
           <p className="leading-snug font-medium tracking-tight text-gray-500 text-sm">{listName}</p>
         </div>
-        <Droppable droppableId={listName}>
+        <Droppable droppableId={listName} key={listName}>
           {(provided, snapshot) => (
             <div
               ref={provided.innerRef}
@@ -26,21 +26,19 @@ export const KanbanList = forwardRef<HTMLDivElement, KanbanListProps>(
               )}
               {...args}>
               <div className="grid grid-cols-1 gap-2">
-                {listItems.map((card: KanbanCardType, index: number) => {
-                  return <>
-                    <Draggable draggableId={`${card.taskTitle}-${card.ticketID}`} index={index}>
-                      {(provided) => (<KanbanCard
-                        key={index}
-                        {...card}
-                        index={index}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
+                {listItems.map((card: KanbanCardType, index: number) => (
+                  <Draggable key={index} draggableId={`${card.taskTitle}-${card.ticketID}`} index={index}>
+                    {(provided, snapshot) => (
+                      <div
                         ref={provided.innerRef}
-                      />)}
-                    </Draggable>
-                  </>
-                })}
-              </div >
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}>
+                        <KanbanCard key={index} {...card} index={index} />
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+              </div>
               {provided.placeholder}
             </div>
           )}
