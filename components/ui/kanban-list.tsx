@@ -3,7 +3,9 @@ import { forwardRef, ReactNode } from 'react';
 import { KanbanCard } from './kanban-card';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 
-export interface KanbanListProps extends React.HTMLAttributes<HTMLDivElement>, KanbanListType {
+export interface KanbanListProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    KanbanListType {
   index: number;
   children?: ReactNode;
 }
@@ -13,7 +15,9 @@ export const KanbanList = forwardRef<HTMLDivElement, KanbanListProps>(
     return (
       <div>
         <div className="kanban-list-details-wrapper px-2 mb-2">
-          <p className="leading-snug font-medium tracking-tight text-gray-500 text-sm">{listName}</p>
+          <p className="leading-snug font-medium tracking-tight text-gray-500 text-sm">
+            {listName}
+          </p>
         </div>
         <Droppable droppableId={listName} key={listName}>
           {(provided, snapshot) => (
@@ -27,7 +31,10 @@ export const KanbanList = forwardRef<HTMLDivElement, KanbanListProps>(
               {...args}>
               <div className="grid grid-cols-1 gap-2">
                 {listItems.map((card: KanbanCardType, index: number) => (
-                  <Draggable key={`${card.taskTitle.replaceAll(' ', '-')}-${card.ticketID}`} draggableId={`${card.taskTitle.replaceAll(' ', '-')}-${card.ticketID}`} index={index}>
+                  <Draggable
+                    key={`${card.taskTitle.replaceAll(' ', '-')}-${card.ticketID}`}
+                    draggableId={`${card.taskTitle.replaceAll(' ', '-')}-${card.ticketID}`}
+                    index={index}>
                     {(provided, snapshot) => (
                       <div
                         ref={provided.innerRef}
