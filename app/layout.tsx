@@ -19,6 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script async src="https://cdn.splitbee.io/sb.js"></script>
+      </head>
       <body className={inter.className}>
         <KanbanBoardContextProvider>
           <Header />
